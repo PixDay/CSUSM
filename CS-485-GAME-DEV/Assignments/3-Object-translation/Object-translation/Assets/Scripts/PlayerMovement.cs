@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public float speed = 10.0f;
+    public GameObject prefab;
     private Vector3 vector;
     private Rigidbody rigidbody;
     // Start is called before the first frame update
@@ -28,9 +29,17 @@ public class PlayerMovement : MonoBehaviour
         vector.y = 0.0f;
     }
 
+    void DuplicateWithNewObject() 
+    {
+        Instantiate(prefab, new Vector3(Random.Range(-8.0f, 8.0f), 0.5f, Random.Range(-8.0f, 8.0f)), Quaternion.identity);
+    }
+
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.collider.gameObject.tag == "CollidedSphere")
+        if (collision.collider.gameObject.tag == "CollidedSphere") 
+        {
             Destroy(collision.collider.gameObject);
+            DuplicateWithNewObject();
+        }
     }
 }
