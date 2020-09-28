@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
     CharacterController characterController;
 
     public float speed = 6.0f;
+    public float rotSpeed = 20.0f;
     public float jumpSpeed = 8.0f;
     public float gravity = 20.0f;
 
@@ -27,11 +28,11 @@ public class PlayerMovement : MonoBehaviour
             moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0.0f, Input.GetAxis("Vertical"));
             moveDirection *= speed;
 
-            Debug.Log(Mathf.Abs(moveDirection.x) + Mathf.Abs(moveDirection.z));
+            transform.rotation = Quaternion.LookRotation(moveDirection * Time.deltaTime);
             if (Input.GetButton("Jump"))
             {
                 moveDirection.y = jumpSpeed;
-            }
+            }         
         }
         moveDirection.y -= gravity * Time.deltaTime;
         animator.SetFloat("Speed", Mathf.Abs(moveDirection.x) + Mathf.Abs(moveDirection.z));
