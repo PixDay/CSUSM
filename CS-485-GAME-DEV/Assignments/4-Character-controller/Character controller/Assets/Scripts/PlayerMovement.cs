@@ -12,6 +12,7 @@ public class PlayerMovement : MonoBehaviour
     public float gravity = 20.0f;
 
     private Vector3 moveDirection = Vector3.zero;
+    private Vector3 Direction = Vector3.zero;
     private Animator animator;
     // Start is called before the first frame update
     void Start()
@@ -27,8 +28,10 @@ public class PlayerMovement : MonoBehaviour
         {
             moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0.0f, Input.GetAxis("Vertical"));
             moveDirection *= speed;
-
-            transform.rotation = Quaternion.LookRotation(moveDirection * Time.deltaTime);
+            
+            if (moveDirection != Vector3.zero)
+                Direction = moveDirection;
+            transform.rotation = Quaternion.LookRotation(Direction * Time.deltaTime);
             if (Input.GetButton("Jump"))
             {
                 moveDirection.y = jumpSpeed;
